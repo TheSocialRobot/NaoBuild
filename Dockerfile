@@ -16,7 +16,7 @@ RUN python -m pip install --upgrade pip
 RUN pip install qibuild 
 
 # don't want to run as root
-RUN useradd -rm -d /app -s /bin/bash -u 1000 builduser
+RUN useradd -rm -d /app -s /bin/bash -u 1001 builduser
 RUN mkdir /opt/toolchains
 RUN chown -R builduser /opt/toolchains
 USER builduser
