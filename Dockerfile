@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN python -m pip install --upgrade pip
 
-RUN pip install --user qibuild 
+RUN pip install qibuild 
 
 # don't want to run as root
 RUN useradd -rm -d /app -s /bin/bash -u 1000 builduser
@@ -21,6 +21,10 @@ RUN mkdir /opt/toolchains
 RUN chown -R builduser /opt/toolchains
 USER builduser
 WORKDIR /app
+
+# fix path so qibuild is available later
+ENV PATH "$PATH:/usr/local/bin"
+RUN echo "export PATH=${PATH}:/usr/local/bin" >> /app/.bashrc
 
 # NAOQI SDKs
 WORKDIR /opt/toolchains
