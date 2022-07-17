@@ -9,6 +9,24 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            thesocialrobot/naobuild
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -22,6 +40,5 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: 
-            - thesocialrobot/naobuild:latest
-            - thesocialrobot/naobuild:2.1.4.13
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
