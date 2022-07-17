@@ -15,8 +15,8 @@ RUN python -m pip install --upgrade pip
 
 # don't want to run as root
 RUN useradd -rm -d /app -s /bin/bash -u 1000 builduser
-RUN mkdir /app/toolchains
-RUN chown -R builduser /app
+RUN mkdir /opt/toolchains
+RUN chown -R builduser /opt/toolchains
 USER builduser
 WORKDIR /app
 
@@ -27,7 +27,7 @@ RUN echo "export PATH=${PATH}:/app/.local/bin" >> /app/.bashrc
 RUN pip install --user qibuild 
 
 # NAOQI SDKs
-WORKDIR /app/toolchains
+WORKDIR /opt/toolchains
 RUN wget -q https://the-social-robot.s3.eu-west-2.amazonaws.com/nao-2.1.4.13/naoqi-sdk-2.1.4.13-linux64.tar.gz && \
     tar -xf naoqi-sdk-2.1.4.13-linux64.tar.gz
 RUN wget -q https://the-social-robot.s3.eu-west-2.amazonaws.com/nao-2.1.4.13/ctc-linux64-atom-2.1.4.13.zip && \
@@ -38,9 +38,13 @@ WORKDIR /app
 RUN qibuild init
 
 # desktop toolchain
-RUN qitoolchain create naoqi-sdk toolchains/naoqi-sdk-2.1.4.13-linux64/toolchain.xml
+RUN qitoolchain create naoqi-sdk /opt/toolchains/naoqi-sdk-2.1.4.13-linux64/toolchain.xml
 RUN qibuild add-config naoqi-sdk --toolchain naoqi-sdk
 
 # robot (cross-compilation) toolchain
-RUN qitoolchain create cross-atom toolchains/ctc-linux64-atom-2.1.4.13/toolchain.xml
+RUN qitoolchain create cross-atom /opt/toolchains/ctc-linux64-atom-2.1.4.13/toolchain.xml
 RUN qibuild add-config cross-atom --toolchain cross-atom
+
+# place to checkout code in and build
+RUN mkdir /app/build
+WORKDIR /app/build
