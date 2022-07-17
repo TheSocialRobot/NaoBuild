@@ -22,4 +22,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: thesocialrobot/naobuild-2.1.4.13:latest
+          tags: 
+            - thesocialrobot/naobuild:latest
+            - thesocialrobot/naobuild:2.1.4.13
