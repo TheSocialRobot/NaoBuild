@@ -1,6 +1,6 @@
 # NaoBuild
 
-Docker image for building NAO code using the C++ SDK targetting either deaktop machines or the robot.
+Docker image for building NAO code using the C++ SDK targetting either desktop machines or the robot.
 
 ## SDKs
 
