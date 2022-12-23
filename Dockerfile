@@ -20,7 +20,7 @@ RUN wget https://github.com/Kitware/CMake/releases/download/v3.25.1/cmake-3.25.1
     && rm /tmp/cmake-install.sh
 ENV PATH="/usr/bin/cmake/bin:${PATH}"
 
-RUN pip install qibuild 
+RUN pip install qibuild conan
 
 # don't want to run as root
 RUN useradd -rm -d /app -s /bin/bash -u 1001 builduser
