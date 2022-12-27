@@ -2,9 +2,12 @@
 FROM python:3.9.6-slim-buster
 
 RUN apt-get update && apt-get install -y \
+    autoconf \
     build-essential \
     ca-certificates \
     curl \
+    libtool \
+    pkg-config \
     software-properties-common \
     unzip \
     wget \
