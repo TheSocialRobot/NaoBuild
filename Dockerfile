@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     ca-certificates \
     curl \
+    git \
     libtool \
     pkg-config \
     software-properties-common \
